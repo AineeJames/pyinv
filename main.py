@@ -3,6 +3,38 @@ import logging
 import argparse
 
 logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
+
+import sys,tty,os,termios
+def getkey():
+    old_settings = termios.tcgetattr(sys.stdin)
+    tty.setcbreak(sys.stdin.fileno())
+    try:
+        while True:
+            b = os.read(sys.stdin.fileno(), 3).decode()
+            if len(b) == 3:
+                k = ord(b[2])
+            else:
+                k = ord(b)
+            key_mapping = {
+                127: 'backspace',
+                10: 'return',
+                32: 'space',
+                9: 'tab',
+                27: 'esc',
+                65: 'up',
+                66: 'down',
+                67: 'right',
+                68: 'left',
+                113: 'q',
+                117: 'u',
+                115: 's'
+
+            }
+            return key_mapping.get(k, chr(k))
+    finally:
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
 ap.add_argument("-o", "--open", required=False, help="opens existing db for viewing or editing")
