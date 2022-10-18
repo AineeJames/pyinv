@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import logging
+from rich.logging import RichHandler
 import argparse
 from pick import pick
 from keyboard import getkey
@@ -8,8 +9,14 @@ console = Console()
 from rich.table import Table
 from rich.text import Text
 from rich import box
-logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.WARNING)
+logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.INFO)
 
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
+
+log = logging.getLogger("rich")
 ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
 ap.add_argument("-o", "--open", required=False, help="opens existing db for viewing or editing")
@@ -22,12 +29,12 @@ if not args['new'] and not  args['open']:
 if args['new']:
     con = sql.connect(f"{args['new']}")
     cur = con.cursor()
-    logging.info(f"Connected to db {args['new']}")
+    log.info(f"Connected to db {args['new']}")
     cur.execute("CREATE TABLE IF NOT EXISTS inventory(Category, Item, Quantity, Location)")
     con.commit()
 else:
     con = sql.connect(f"{args['open']}")
-    logging.info(f"Connected to db {args['open']}")
+    log.info(f"Connected to db {args['open']}")
     cur = con.cursor()
 
 def categorySelect():
