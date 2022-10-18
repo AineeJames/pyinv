@@ -47,7 +47,7 @@ def categorySelect():
 # State loop
 while True:
     # Determine next state
-    print("Do you want to (s)earch, (u)pdate, or (q)uit")
+    console.print(Text("Do you want to (s)earch, (u)pdate, or (q)uit", "magenta italic bold"))
     while True:
         match getkey():
             case 's':
@@ -57,7 +57,7 @@ while True:
                 for category in targeted_categories:
                     db_out.append(cur.execute("SELECT * from inventory WHERE category = ?", (category[0],)).fetchall())
                 for category in db_out:
-                    table = Table(title=f"{category[0][0]}", box=box.MINIMAL)
+                    table = Table(title=f"{category[0][0]}", box=box.DOUBLE_EDGE)
                     table.add_column("ITEM", style="green")
                     table.add_column("QUANTITY", style="blue")
                     table.add_column("LOCATION", style="magenta")
