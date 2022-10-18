@@ -31,6 +31,7 @@ def categorySelect():
     title = "Select a category or multiple from the list below..."
     db_out = cur.execute("SELECT DISTINCT category from inventory").fetchall()
     options = [category[0] for category in db_out]
+    options = sorted(options)
     selection = pick(options, title, multiselect=True, min_selection_count=1)
     logging.info(f"Selected categories: {selection}")
     return selection
