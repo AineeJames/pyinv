@@ -2,7 +2,7 @@ import sqlite3 as sql
 import logging
 import argparse
 from keyboard import getkey
-logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.INFO)
 
 
 ap = argparse.ArgumentParser()
@@ -30,7 +30,8 @@ while True:
     # Determine next state
     print("Do you want to (s)earch, (u)pdate, or (q)uit")
     while True:
-        match getkey():
+        key = getkey()
+        match key:
             case 's':
                 print("pressed s")
             case 'u':
