@@ -18,7 +18,7 @@ if args['new']:
     con = sql.connect(f"{args['new']}")
     cur = con.cursor()
     logging.info(f"Connected to db {args['new']}")
-    cur.execute("CREATE TABLE IF NOT EXISTS items(category, item, quantity, location)")
+    cur.execute("CREATE TABLE IF NOT EXISTS inventory(Category, Item, Quantity, Location)")
     con.commit()
 else:
     con = sql.connect(f"{args['open']}")
@@ -27,9 +27,11 @@ else:
 
 def categorySelect():
     title = "Select a category or multiple from the list below..."
-    print(cur.execute("SELECT DISTINCT category from categories").fetchall())
-    #selection = pick(options, title, multiselect=True, min_selection_count=1)
-    return
+    db_out = cur.execute("SELECT DISTINCT category from inventory").fetchall()
+    options = [category[0] for category in db_out]
+    selection = pick(options, title, multiselect=True, min_selection_count=1)
+    logging.info(f"Selected categories: {selection}")
+    return selection
 
 # State loop
 while True:
@@ -41,7 +43,8 @@ while True:
                 #print out categories and have user select
                 title = "Select please lord select a god damn thingy..."
                 targeted_categories = categorySelect()
-
+                for category in targeted_categories:
+                    print(cur.execute("SELECT * from inventory WHERE category = ?", (category[0],)).fetchall())
                 #print out items w/ quantity and location
                 break
             case 'u':
