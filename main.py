@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import logging
 import argparse
+from pick import pick
 from keyboard import getkey
 logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -33,10 +34,28 @@ while True:
         match getkey():
             case 's':
                 print("pressed s")
+                #print out categories and have user select
+                title = "Select please lord select a god damn thingy..."
+                options = ["lol", "uwont", "xd"]
+                selection = pick(options, title, multiselect=True, min_selection_count=1)
+                print(selection)
+                #print out items w/ quantity and location
+                break
             case 'u':
                 print("pressed u")
+                while True:
+                    match getkey():
+                        case 'e':
+                            pass
+                        case 'r':
+                            pass
+                        case 'n':
+                            pass
+                        case _:
+                            pass
             case 'q':
-                print("pressed q")
+                print("Closing...")
+                exit()
             case _:
                 pass
 
