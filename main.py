@@ -13,7 +13,7 @@ if not args['new'] and not  args['open']:
 if args['new']:
     con = sql.connect(f"{args['new']}")
     cur = con.cursor()
-    cur.execute("CREATE TABLE categories(category, itemid)")
+    cur.execute("CREATE TABLE items(category, item, quantity, location)")
     con.commit()
 else:
     con = sql.connect(f"{args['open']}")
