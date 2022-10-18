@@ -6,6 +6,10 @@ ap.add_argument("-n", "--new", required=False, help="creates a new db with given
 ap.add_argument("-o", "--open", required=False, help="opens existing db for viewing or editing")
 args = vars(ap.parse_args())
 
+if not args['new'] and not  args['open']:
+    print("you dummy trash")
+    exit()
+
 if args['new']:
     con = sql.connect(f"{args['new']}")
     cur = con.cursor()
