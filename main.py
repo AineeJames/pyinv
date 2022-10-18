@@ -9,8 +9,6 @@ console = Console()
 from rich.table import Table
 from rich.text import Text
 from rich import box
-logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.INFO)
-
 FORMAT = "%(message)s"
 logging.basicConfig(
     level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
