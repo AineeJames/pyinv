@@ -3,8 +3,7 @@ import logging
 import argparse
 from pick import pick
 from keyboard import getkey
-logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.INFO)
-
+logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
@@ -26,20 +25,23 @@ else:
     logging.info(f"Connected to db {args['open']}")
     cur = con.cursor()
 
+def categorySelect():
+    title = "Select a category or multiple from the list below..."
+    print(cur.execute("SELECT DISTINCT category from categories").fetchall())
+    #selection = pick(options, title, multiselect=True, min_selection_count=1)
+    return
+
 # State loop
 while True:
     # Determine next state
     print("Do you want to (s)earch, (u)pdate, or (q)uit")
     while True:
-        key = getkey()
-        match key:
+        match getkey():
             case 's':
-                print("pressed s")
                 #print out categories and have user select
                 title = "Select please lord select a god damn thingy..."
-                options = ["lol", "uwont", "xd"]
-                selection = pick(options, title, multiselect=True, min_selection_count=1)
-                print(selection)
+                targeted_categories = categorySelect()
+
                 #print out items w/ quantity and location
                 break
             case 'u':
