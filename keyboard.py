@@ -7,7 +7,9 @@ def getkey():
             b = os.read(sys.stdin.fileno(), 3).decode()
             if len(b) == 3:
                 k = ord(b[2])
-            else:
+            elif len(b) == 2:
+                k = ord(b[1])
+            elif len(b) == 1:
                 k = ord(b)
             key_mapping = {
                 127: 'backspace',
