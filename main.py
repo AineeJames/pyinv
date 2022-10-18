@@ -44,7 +44,9 @@ while True:
                 title = "Select please lord select a god damn thingy..."
                 targeted_categories = categorySelect()
                 for category in targeted_categories:
-                    print(cur.execute("SELECT * from inventory WHERE category = ?", (category[0],)).fetchall())
+                    cur.execute("SELECT * from inventory WHERE category = ?", (category[0],))
+                found_items = cur.fetchall()
+                print(found_items)
                 #print out items w/ quantity and location
                 break
             case 'u':
