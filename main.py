@@ -4,8 +4,11 @@ import argparse
 from pick import pick
 from keyboard import getkey
 from rich.console import Console
+console = Console()
 from rich.table import Table
-logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
+from rich.text import Text
+from rich import box
+logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.WARNING)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
@@ -44,19 +47,17 @@ while True:
         match getkey():
             case 's':
                 #print out categories and have user select
-                title = "Select please lord select a god damn thingy..."
                 targeted_categories = categorySelect()
                 db_out = []
                 for category in targeted_categories:
                     db_out.append(cur.execute("SELECT * from inventory WHERE category = ?", (category[0],)).fetchall())
                 for category in db_out:
-                    table = Table(title=f"{category[0][0]}")
-                    table.add_column("ITEM")
-                    table.add_column("QUANTITY")
-                    table.add_column("LOCATION")
+                    table = Table(title=f"{category[0][0]}", box=box.MINIMAL)
+                    table.add_column("ITEM", style="green")
+                    table.add_column("QUANTITY", style="blue")
+                    table.add_column("LOCATION", style="magenta")
                     for item in category:
                         table.add_row(item[1], item[2], item[3])
-                    console = Console()
                     console.print(table)
                 break
             case 'u':
@@ -72,7 +73,7 @@ while True:
                         case _:
                             pass
             case 'q':
-                print("Closing...")
+                console.print(Text("Closing...", "bold red"))
                 exit()
             case _:
                 pass
