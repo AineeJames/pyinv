@@ -1,7 +1,6 @@
 import sqlite3 as sql
 import logging
 import argparse
-import keyboard
 
 logging.basicConfig(format='%(asctime)s - %(name)s:%(levelname)s:%(message)s', level=logging.DEBUG)
 ap = argparse.ArgumentParser()
@@ -24,8 +23,18 @@ else:
     logging.info(f"Connected to db {args['open']}")
     cur = con.cursor()
 
+# State loop
 while True:
+    # Determine next state
     print("Do you want to (s)earch, (u)pdate, or (q)uit")
     while True:
-        if keyboard.is_pressed('s'):
-            break
+        match getkey():
+            case 's':
+                print("pressed s")
+            case 'u':
+                print("pressed u")
+            case 'q':
+                print("pressed q")
+            case _:
+                pass
+
