@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import argparse
+import keyboard
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
@@ -14,3 +15,9 @@ if args['new']:
 else:
     con = sql.connect(f"{args['open']}")
     cur = con.cursor()
+
+while True:
+    print("Do you want to (s)earch, (u)pdate, or (q)uit")
+    while True:
+        if keyboard.is_pressed('s'):
+            break
