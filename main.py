@@ -19,7 +19,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-n", "--new", required=False, help="creates a new db with given name")
 ap.add_argument("-o", "--open", required=False, help="opens existing db for viewing or editing")
 args = vars(ap.parse_args())
-
+breakpoint()
 if not args['new'] and not  args['open']:
     print("you dummy trash")
     exit()
