@@ -1,0 +1,4 @@
+add lookup for datasheet from alldatasheets.com
+give selection for what manufacturer the datasheet 
+should come from, add this datasheet link or maybe 
+even PDF to the db
