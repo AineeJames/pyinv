@@ -1,5 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+from rich.table import Table
+from rich import box
+from rich.console import Console
+
+console = Console()
 
 r = requests.get("https://www.alldatasheet.com/view.jsp?Searchword=LM324")
 
@@ -19,4 +24,12 @@ for row in s[0].find_all("tr"):
         else:
             rowlist[counter].append(cell.text)
     counter += 1
-print(rowlist)
+print(rowlist[1:])
+table = Table(title="yeahh", show_lines=True)
+table.add_column("Manufacturer", style="blue")
+table.add_column("Link to pdf")
+for x in rowlist[1:]:
+    if "www." not in x[0]:
+        table.add_row(x[0], f'[link="{x[1]}]{x[1]}[/link]')
+
+console.print(table)
